@@ -1,0 +1,6 @@
+{
+  "globalDependencies": {
+    "pixi.js": "github:pixijs/pixi-typescript/pixi.js.d.ts#6cc1f24eba1c66275904d2b93548f0bb0b4a93bc",
+    "tween.js": "registry:dt/tween.js#0.0.0+20161108151541"
+  }
+}
