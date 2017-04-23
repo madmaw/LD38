@@ -1995,8 +1995,8 @@ var Level;
             var roomHeight = this.room.height * tileHeight;
             //let expectedRoomWidth = 8 * tileWidth;
             //let expectedRoomHeight = 8 * tileHeight;
-            var expectedRoomWidth = roomWidth;
-            var expectedRoomHeight = roomHeight;
+            var expectedRoomWidth = roomWidth + tileWidth;
+            var expectedRoomHeight = roomHeight + tileHeight;
             var width = document.body.clientWidth;
             var height = document.body.clientHeight;
             var scale = Math.min(width / expectedRoomWidth, height / expectedRoomHeight);
@@ -2375,49 +2375,6 @@ var Sound;
     }());
     Sound.WebAudioToneSoundFactory = WebAudioToneSoundFactory;
 })(Sound || (Sound = {}));
-var StateEventType;
-(function (StateEventType) {
-    StateEventType[StateEventType["LoadingComplete"] = 0] = "LoadingComplete";
-    StateEventType[StateEventType["GoHome"] = 1] = "GoHome";
-    StateEventType[StateEventType["PlayLevel"] = 2] = "PlayLevel";
-})(StateEventType || (StateEventType = {}));
-var StateEvent = (function () {
-    function StateEvent(type, data) {
-        this.type = type;
-        this.data = data;
-    }
-    return StateEvent;
-}());
-var StateEventDataLoadingComplete = (function () {
-    function StateEventDataLoadingComplete(images) {
-        this.images = images;
-    }
-    return StateEventDataLoadingComplete;
-}());
-var StateEventDataLevelPlay = (function () {
-    function StateEventDataLevelPlay(id) {
-        this.id = id;
-    }
-    return StateEventDataLevelPlay;
-}());
-var StateKeyType;
-(function (StateKeyType) {
-    StateKeyType[StateKeyType["Home"] = 0] = "Home";
-    StateKeyType[StateKeyType["LevelPlay"] = 1] = "LevelPlay";
-})(StateKeyType || (StateKeyType = {}));
-var StateKey = (function () {
-    function StateKey(type, data) {
-        this.type = type;
-        this.data = data;
-    }
-    return StateKey;
-}());
-var StateKeyDataLevelPlay = (function () {
-    function StateKeyDataLevelPlay(levelId) {
-        this.levelId = levelId;
-    }
-    return StateKeyDataLevelPlay;
-}());
 var Sound;
 (function (Sound) {
     var WebAudioVibratoSoundFactory = (function () {
@@ -2465,4 +2422,47 @@ var Sound;
     }());
     Sound.WebAudioVibratoSoundFactory = WebAudioVibratoSoundFactory;
 })(Sound || (Sound = {}));
+var StateEventType;
+(function (StateEventType) {
+    StateEventType[StateEventType["LoadingComplete"] = 0] = "LoadingComplete";
+    StateEventType[StateEventType["GoHome"] = 1] = "GoHome";
+    StateEventType[StateEventType["PlayLevel"] = 2] = "PlayLevel";
+})(StateEventType || (StateEventType = {}));
+var StateEvent = (function () {
+    function StateEvent(type, data) {
+        this.type = type;
+        this.data = data;
+    }
+    return StateEvent;
+}());
+var StateEventDataLoadingComplete = (function () {
+    function StateEventDataLoadingComplete(images) {
+        this.images = images;
+    }
+    return StateEventDataLoadingComplete;
+}());
+var StateEventDataLevelPlay = (function () {
+    function StateEventDataLevelPlay(id) {
+        this.id = id;
+    }
+    return StateEventDataLevelPlay;
+}());
+var StateKeyType;
+(function (StateKeyType) {
+    StateKeyType[StateKeyType["Home"] = 0] = "Home";
+    StateKeyType[StateKeyType["LevelPlay"] = 1] = "LevelPlay";
+})(StateKeyType || (StateKeyType = {}));
+var StateKey = (function () {
+    function StateKey(type, data) {
+        this.type = type;
+        this.data = data;
+    }
+    return StateKey;
+}());
+var StateKeyDataLevelPlay = (function () {
+    function StateKeyDataLevelPlay(levelId) {
+        this.levelId = levelId;
+    }
+    return StateKeyDataLevelPlay;
+}());
 //# sourceMappingURL=out.js.map
