@@ -26,6 +26,7 @@
                 files: [
                     { expand: true, src: ['node_modules/pixi.js/dist/pixi.js', 'node_modules/tween.js/src/Tween.js', 'node_modules/hammerjs/hammer.js'], dest: 'dist/' },
                     { expand: true, src: ['build/out.js'], dest: 'dist/' },
+                    { expand: true, src: ['res/**'], dest: 'dist/' },
                     { expand: true, src: ['index.html'], dest: 'dist/' },
                     { expand: true, src: ['app.css'], dest: 'dist/' }
                 ]
