@@ -1,11 +1,188 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <html>
     <head>
         <title>LD38</title>
         <script src="build/out.js"></script>
         <script src="node_modules/pixi.js/dist/pixi.js"></script>
+        <script src="node_modules/tween.js/src/tween.js"></script>
+        <script src="node_modules/hammerjs/hammer.js"></script>
+        <script id="level-1" name="Tutorial 1" help="Walk to the exit tile" type="text/template">
+  W#  
+W#wPW#
+
+W#  W#
+
+W#  W#
+
+W#  W#
+W
+W#  W#
+  W#  
+        </script>
+        <script id="level-2" name="Tutorial 2" help="Exit tiles are triggered by their respective colors" type="text/template">
+  W#  W#  W#
+W#rPW#  W#  W#
+
+W#  W#gPW#  W#
+      
+W#  W#  W#bPW#
+      
+W#  W#  W#  W#
+R   G   B
+W#  W#  W#  W#
+  W#  W#  W#
+        </script>
+
+        <script id="level-3" name="Tutorial 3" help="Walking through a colored wall will filter out that color" type="text/template">
+  W#  W# 
+W#wP    W#  
+  C#      W#
+W#  W#      W#
+      M#
+W#  W#  W#  W#
+R   G   B Y#
+W#  W#  W#  W#
+  W#  W#  W#
+        </script>
+
+        <script id="level-4" name="Tutorial 4" help="You can combine your colors back again" type="text/template">
+  W#  W#  W#
+W#  C#wPY#  W#
+      M#   
+W#          W#
+  W#      W#
+    W#  W#
+        
+    W#  W#
+    W   
+    W#  W#
+      W#
+        </script>
+
+        <script id="level-5" name="Tutorial 5" help="Boulders can trigger the exit" type="text/template">
+  W#  W#  W#
+W#    rP    W#
+
+W#YBW#  W#MBW#
+      
+W#  W#  W#  W#
+      
+W#  W#  W#  W#
+G   R   B
+W#  W#  W#  W#
+  W#  W#  W#
+        </script>
+        <script id="level-6" name="Tutorial 6" help="Boulders can go through walls just like you" type="text/template">
+R W#  W#  W#
+W#          W#
+  G#  G#  G#
+W#          W#
+      
+W#    yP    W#
+      
+W#    MB    W#
+
+W#          W#
+  G#  G#B G#   
+W#          W#
+  W#  W#  W#
+        </script>
+
+        <script id="level-7" name="Tutorial 7" help="Boulders can push other boulders" type="text/template">
+  W#  W#  W#  W#  W#
+W#        rP        W#
+
+W#    WB      WB    W#
+
+W#                  W#
+            
+W#        GB        W#
+  R#  R#G R#  R#  R#
+W#                  W#
+  W#  W#  W#  W#  W#
+        </script>
+
+        <script id="level-8" name="Tutorial 8" help="Sometimes there are monsters! Avoid!!" type="text/template">
+  W#  W#  W#
+W#    wP    W#
+  R#      B#  
+W#  W#WDW#  W#    
+
+W#GDW#  W#  W#    
+    W  
+W#          W#    
+  W#  W#  W#  
+        </script>
+
+        <script id="level-9" name="Tutorial 9" help="Flickering objects (like you) can split, solid objects cannot" type="text/template">
+  W#  W#  W#
+W#    wP    W#
+G     R#R      
+W#  G#wBG#  W#    
+      R#
+W#          W#    
+B     R#B     
+W#  G#WBG#  W#
+      R#
+W#          W#    
+  W#  W#  W#  
+        </script>
+
+        <script id="level-10" name="Filter" type="text/template">
+  W#  W#  W#
+W#    wP    W#
+  C#  Y#  M#
+W#          W#
+      W#
+W#  W#  W#  W#
+      W#
+W#          W#
+R   B   G
+W#          W#
+  W#  W#  W#
+        </script>
+
+        <script id="level-11" name="Push" type="text/template">
+  W#  W#  W#
+W#    wP    W#
+  C#  Y#  M#
+W#          W#
+      W#
+W#  W#  W#  W#
+      W#
+W#          W#
+R   B   G
+W#          W#
+  W#  W#  W#
+        </script>
+
+
         <link href="app.css" rel="stylesheet" />
     </head>
     <body>
-        <canvas id="canvas"></canvas>
+        <div id="loading">
+            <p id="loading-progress">Configuring...</p>
+            <div id="loading-assets"></div>
+        </div>
+        <div id="home" class="hidden">
+            <p class="home-title"><span style="color: red">R</span><span style="color: green">G</span><span style="color: blue">B</span></p>
+            <div id="home-levels">
+
+            </div>
+        </div>
+        <div id="level" class="hidden">
+            <div id="level-victory" class="hidden">
+                <p>Victory!</p>
+            </div>
+            <div id="level-help">
+            </div>
+            <div id="level-restart">
+                <img src="res/restart.png"/>
+            </div>
+            <div id="level-home">
+                <img src="res/home.png" />
+            </div>
+            <canvas id="level-canvas"></canvas>
+        </div>
     </body>
 </html>
