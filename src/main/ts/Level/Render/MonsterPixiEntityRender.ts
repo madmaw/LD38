@@ -11,7 +11,8 @@ module Level.Render {
             tileWidth: number,
             tileHeight: number, 
             private splitSound: Sound.Sound,
-            private moveSound: Sound.Sound
+            private moveSound: Sound.Sound, 
+            private deathSound: Sound.Sound
 
         ) {
             super(entity, container, tileWidth, tileHeight);
@@ -40,7 +41,7 @@ module Level.Render {
                 animations.push(new RepeatingTweenAnimation(this.sprite, { rotation: -Math.PI / 20 }, { rotation: Math.PI / 20 }, 600));
             }                
             if (!this.entity.sticky) {
-                animations.push(new RepeatingTweenAnimation(this.sprite, { alpha: 0.6 }, { alpha: 1 }, 50));
+                animations.push(new RepeatingTweenAnimation(this.sprite, { alpha: 0.5 }, { alpha: 1 }, 100));
             }
             if (animations.length > 0) {
                 this.setAmbientAnimation(
@@ -105,6 +106,11 @@ module Level.Render {
                 this.splitSound();
             } else if (delta.type == Level.Description.DeltaType.MonsterRemoved) {
                 this.detach();
+                if (delta.data instanceof Level.Description.DeltaDataMonsterRemove) {
+                    if (delta.data.violent) {
+                        this.deathSound();
+                    }
+                }
             } else {
                 return new EmptyAnimation();
             }

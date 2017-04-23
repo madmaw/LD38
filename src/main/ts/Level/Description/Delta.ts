@@ -19,7 +19,7 @@
         constructor(
             public entity: Level.Description.Entity,
             public type: DeltaType,
-            public data?: DeltaDataMoveToTile | DeltaDataMoveToWall | DeltaDataRecolor
+            public data?: DeltaDataMoveToTile | DeltaDataMoveToWall | DeltaDataRecolor | DeltaDataMonsterRemove
         ) {
             this.children = [];
         }
@@ -62,6 +62,12 @@
 
     export class DeltaDataRecolor {
         constructor(public toColor: Color) {
+
+        }
+    }
+
+    export class DeltaDataMonsterRemove {
+        constructor(public violent: boolean) {
 
         }
     }

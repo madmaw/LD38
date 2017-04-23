@@ -137,7 +137,7 @@ module Level.Description {
                     let survivingColors = excludedColors.exclude(mover.getColor());
                     if (moveColor.isBlack() || this.sticky) {
                         // or die entirely
-                        deltas.push(this.die(room));
+                        deltas.push(this.die(room, this.monsterType != mover.monsterType));
                     } else {
                         // kill off our colours
                         let colorDelta = this.recolor(room, moveColor);
@@ -232,7 +232,7 @@ module Level.Description {
                     moveToTileDelta.addChild(room.addMonster(this));
                 } else {
                     // we died!
-                    moveToTileDelta.addChild(this.die(room));
+                    moveToTileDelta.addChild(this.die(room, true));
                 }
 
             }
@@ -252,7 +252,7 @@ module Level.Description {
                     // merge
                     let color = this.getColor().union(monster.getColor());
                     this.sticky = this.sticky && monster.sticky;
-                    deltas.push(this.kill(room, monster));
+                    deltas.push(this.kill(room, monster, false));
                     deltas.push(this.recolor(room, color));
                 } 
             }
@@ -271,12 +271,12 @@ module Level.Description {
             }
         }
 
-        die(room: Room): Delta {
-            return this.kill(room, this);
+        die(room: Room, violent: boolean): Delta {
+            return this.kill(room, this, violent);
         }
 
-        kill(room: Room, monster: Monster): Delta {
-            let result = new Delta(monster, DeltaType.MonsterRemoved);
+        kill(room: Room, monster: Monster, violent: boolean): Delta {
+            let result = new Delta(monster, DeltaType.MonsterRemoved, new DeltaDataMonsterRemove(violent));
             result.addChild(room.removeMonster(monster));
             return result;
         }

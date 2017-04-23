@@ -43,21 +43,33 @@ window.onload = function () {
             var audioContext: AudioContext;
             let splitSound: Sound.Sound;
             let moveSound: Sound.Sound;
+            let activateSound: Sound.Sound;
+            let deactivateSound: Sound.Sound;
+            let deathSound: Sound.Sound;
             if ((<any>window)["AudioContext"] != null) {
                 audioContext = new AudioContext();
                 //    } else if (_w["webkitAudioContext"]) {
                 //        audioContext = new webkitAudioContext();
                 splitSound = new Sound.WebAudioBoomSoundFactory(audioContext, 0.2).create();
                 moveSound = new Sound.WebAudioToneSoundFactory(audioContext, 'sawtooth', 250, 1000, 400, 0.01, 0.08, 0.12, 0.3, 0.3).create();
+                activateSound = new Sound.WebAudioToneSoundFactory(audioContext, 'square', 250, 1000, 200, 0.01, 0.08, 0.1, 0.2, 0.2).create();
+                deactivateSound = new Sound.WebAudioToneSoundFactory(audioContext, 'square', 1000, 250, 200, 0.01, 0.08, 0.1, 0.2, 0.2).create();;
+                deathSound = new Sound.WebAudioVibratoSoundFactory(audioContext, 200, 10, 6, 0.7).create();
             } else {
                 splitSound = function () {
 
                 };
                 moveSound = splitSound;
+                activateSound = splitSound;
+                deactivateSound = splitSound;
+                deathSound = splitSound;
             }
             var sounds: { [_: string]: Sound.Sound } = {};
             sounds['split'] = splitSound;
             sounds['move'] = moveSound;
+            sounds['activate'] = activateSound; 
+            sounds['deactivate'] = deactivateSound;
+            sounds['death'] = deathSound;
 
             let roomFactory = new Level.Description.DelegatingRoomFactory(roomFactories);
             stateFactories[StateKeyType.Home] = (new Home.StateFactoryHome(roomFactory.getLevelSummaries())).create();

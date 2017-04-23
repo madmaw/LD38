@@ -62,13 +62,19 @@
             let roomWidth = this.room.width * tileWidth;
             let roomHeight = this.room.height * tileHeight;
 
-            let expectedRoomWidth = 8 * tileWidth;
-            let expectedRoomHeight = 8 * tileHeight;
+            //let expectedRoomWidth = 8 * tileWidth;
+            //let expectedRoomHeight = 8 * tileHeight;
+            let expectedRoomWidth = roomWidth;
+            let expectedRoomHeight = roomHeight;
 
             let width = document.body.clientWidth;
             let height = document.body.clientHeight;
-
-            let scale = Math.max(1, Math.floor(Math.min(width / expectedRoomWidth, height / expectedRoomHeight)));
+            let scale = Math.min(width / expectedRoomWidth, height / expectedRoomHeight);
+            if (scale < 1) {
+                scale = 0.5;
+            } else {
+                scale = Math.floor(scale);
+            }
 
             let options: PIXI.RendererOptions = {
                 view: canvasElement,
@@ -80,8 +86,8 @@
 
             this.renderer = PIXI.autoDetectRenderer(options);
             this.stage = new PIXI.Container();
-            this.stage.x = ((width - roomWidth) / 2) / scale;
-            this.stage.y = ((height - roomHeight) / 2) / scale;
+            this.stage.x = ((width - roomWidth * scale) / 2);
+            this.stage.y = ((height - roomHeight * scale) / 2);
             this.stage.scale.set(scale);
 
             this.renderFactory = new Level.Render.PixiRenderFactory(

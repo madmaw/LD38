@@ -26,23 +26,27 @@
             } else {
                 to = this.from;
             }
-            this.tween = new TWEEN.Tween(this.target).to(to, this.duration).easing(TWEEN.Easing.Quadratic.InOut).onComplete(() => {
+            let f = () => {
                 this.goingTo = !this.goingTo;
                 this.startNextAnimation();
-            }).start();
-
+            };
+            this.tween = new TWEEN.Tween(this.target).to(to, this.duration).easing(TWEEN.Easing.Quadratic.InOut).onComplete(f).start();
+            if (this.timeoutHandle != null) {
+                clearTimeout(this.timeoutHandle);
+            }
+            // work around bug where tweens stop without feedback
+            this.timeoutHandle = setTimeout(f, this.duration + 500);
+            
         }
 
         start(): void {
             //weird bug where repeating animations don't start initially
-            this.timeoutHandle = setTimeout(() => {
-                if (this.tween == null) {
-                    this.startNextAnimation();
-                } else {
-                    this.tween.start()
+            if (this.tween == null) {
+                this.startNextAnimation();
+            } else {
+                this.tween.start()
 
-                }
-            }, 40);
+            }
         }
 
         stop(): void {

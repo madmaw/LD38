@@ -19,7 +19,7 @@
             loadingElement.removeAttribute('class');
 
             let progressElement = document.getElementById(this.progressElementId);
-            progressElement.innerText = '0%;';
+            progressElement.innerText = '0%';
 
             let assetsElement = document.getElementById(this.assetsElementId);
 
@@ -80,7 +80,7 @@
                             context.putImageData(imageData, 0, 0);
 
                             coloredImages.push(coloredImage);
-                            assetsElement.appendChild(coloredImage);
+                            //assetsElement.appendChild(coloredImage);
                         }
                         images[key] = coloredImages;
 

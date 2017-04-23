@@ -42,7 +42,9 @@
                         tile, 
                         this.stage,
                         this.tileWidth,
-                        this.tileHeight
+                        this.tileHeight, 
+                        this.sounds['activate'], 
+                        this.sounds['deactivate']
                     );
                 } else if (entity.entityType == Level.Description.EntityType.MONSTER) {
                     let images;
@@ -63,9 +65,10 @@
                             monster,
                             this.stage,
                             this.tileWidth,
-                            this.tileHeight, 
-                            this.sounds['split'], 
-                            this.sounds['move']
+                            this.tileHeight,
+                            this.sounds['split'],
+                            this.sounds['move'],
+                            this.sounds['death']
                         );
                     } else {
                         return null;

@@ -8,7 +8,9 @@
             entity: Level.Description.Tile,
             container: PIXI.Container,
             tileWidth: number,
-            tileHeight: number
+            tileHeight: number, 
+            private activateSound: Sound.Sound, 
+            private deactivateSound: Sound.Sound
 
         ) {
             super(entity, container, tileWidth, tileHeight);
@@ -50,9 +52,11 @@
             if (delta.type == Level.Description.DeltaType.TileActivate) {
                 let image = this.activeImages[this.entity.getColor().id];
                 this.sprite.texture = PIXI.Texture.fromCanvas(image);
+                this.activateSound();
             } else if (delta.type == Level.Description.DeltaType.TileDeactivate) {
                 let image = this.passiveImages[this.entity.getColor().id];
                 this.sprite.texture = PIXI.Texture.fromCanvas(image);
+                this.deactivateSound();
             }
             return new EmptyAnimation();
         }
