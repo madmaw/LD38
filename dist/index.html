@@ -4,9 +4,9 @@
         <title>LD38</title>
         <script src="build/out.js"></script>
         <script src="node_modules/pixi.js/dist/pixi.js"></script>
-        <script src="node_modules/tween.js/src/tween.js"></script>
+        <script src="node_modules/tween.js/src/Tween.js"></script>
         <script src="node_modules/hammerjs/hammer.js"></script>
-        <script id="level-1" name="Tutorial 1" help="Walk to the exit tile" type="text/template">
+        <script id="level-1" name="Corridor" help="Walk to the exit tile" type="text/template">
   W#  
 W#wPW#
 
@@ -19,7 +19,7 @@ W
 W#  W#
   W#  
         </script>
-        <script id="level-2" name="Tutorial 2" help="Exit tiles are triggered by their respective colors" type="text/template">
+        <script id="level-2" name="Party" help="Exit tiles are triggered by their respective colors" type="text/template">
   W#  W#  W#
 W#rPW#  W#  W#
 
@@ -33,7 +33,7 @@ W#  W#  W#  W#
   W#  W#  W#
         </script>
 
-        <script id="level-3" name="Tutorial 3" help="Walking through a colored wall will filter out that color" type="text/template">
+        <script id="level-3" name="Split" help="Walking through a colored wall will filter out that color" type="text/template">
   W#  W# 
 W#wP    W#  
   C#      W#
@@ -45,7 +45,7 @@ W#  W#  W#  W#
   W#  W#  W#
         </script>
 
-        <script id="level-4" name="Tutorial 4" help="You can combine your colors back again" type="text/template">
+        <script id="level-4" name="Merge" help="You can combine your colors back again" type="text/template">
   W#  W#  W#
 W#  C#wPY#  W#
       M#   
@@ -59,7 +59,7 @@ W#          W#
       W#
         </script>
 
-        <script id="level-5" name="Tutorial 5" help="Boulders can trigger the exit" type="text/template">
+        <script id="level-5" name="Roll" help="Boulders can trigger the exit" type="text/template">
   W#  W#  W#
 W#    rP    W#
 
@@ -72,7 +72,7 @@ G   R   B
 W#  W#  W#  W#
   W#  W#  W#
         </script>
-        <script id="level-6" name="Tutorial 6" help="Boulders can go through walls just like you" type="text/template">
+        <script id="level-6" name="Friend" help="Boulders can go through walls just like you" type="text/template">
 R W#  W#  W#
 W#          W#
   G#  G#  G#
@@ -88,7 +88,7 @@ W#          W#
   W#  W#  W#
         </script>
 
-        <script id="level-7" name="Tutorial 7" help="Boulders can push other boulders" type="text/template">
+        <script id="level-7" name="Knock on" help="Boulders can push other boulders" type="text/template">
   W#  W#  W#  W#  W#
 W#        rP        W#
 
@@ -102,7 +102,7 @@ W#                  W#
   W#  W#  W#  W#  W#
         </script>
 
-        <script id="level-8" name="Tutorial 8" help="Sometimes there are monsters! Avoid!!" type="text/template">
+        <script id="level-8" name="Tryanos" help="Sometimes there are monsters! Avoid!!" type="text/template">
   W#  W#  W#
 W#    wP    W#
   R#      B#  
@@ -114,7 +114,7 @@ W#          W#
   W#  W#  W#  
         </script>
 
-        <script id="level-9" name="Tutorial 9" help="Flickering objects (like you) can split, solid objects cannot" type="text/template">
+        <script id="level-9" name="Flicker" help="Flickering objects (like you) can split, solid objects cannot" type="text/template">
   W#  W#  W#
 W#    wP    W#
 G     R#R      
@@ -128,7 +128,37 @@ W#          W#
   W#  W#  W#  
         </script>
 
-        <script id="level-10" name="Filter" type="text/template">
+        <script id="level-10" name="Push" type="text/template">
+W W#  W#  W#
+W#    wPG#  W#
+        
+W#  W#WBG#  W#
+  C#      
+W#  W#  W#  W#
+          C#
+W#          W#
+B       R
+W#          W#
+  W#  W#  W#
+        </script>
+
+        <script id="level-11" name="Arena" type="text/template">
+      W#  W#  W#  W#
+    W#              W#
+  W#                  W#
+W#                gP    W#
+                      
+W#        CD  GB        W#
+            
+W#        MD            W#
+R                 
+W#                      W#
+  W#G B#              W#
+    W#  W#          W#    
+      W#  W#  W#  W#  
+        </script>
+
+        <script id="level-12" name="Filter" type="text/template">
   W#  W#  W#
 W#    wP    W#
   C#  Y#  M#
@@ -142,18 +172,36 @@ W#          W#
   W#  W#  W#
         </script>
 
-        <script id="level-11" name="Push" type="text/template">
-  W#  W#  W#
-W#    wP    W#
-  C#  Y#  M#
-W#          W#
-      W#
-W#  W#  W#  W#
-      W#
-W#          W#
-R   B   G
-W#          W#
-  W#  W#  W#
+        <script id="level-13" name="Cascade" type="text/template">
+  W#  W#  W#  W#  W#  W#
+W#        gP            W#
+                          W#
+W#            WB      WB    W#
+  
+W#    WB          rB        W#
+W W#      W#      W#      
+W#    bB  bB                W#
+  W#  W#      W#      W#  W#
+    W#        rB    W#
+    
+    W#    WB      WBW#
+
+    W#              W#
+      W#  W#  W#  W#
+        </script>
+
+        <script id="level-14" name="Co-op" type="text/template">
+  W#  W#  W#  W#  W#  W#
+W#wPR#          G#      W#
+      W#  W#R  
+W#          W#  W#      W#
+  W#  B#  W#        G    
+W#          W#  W#      W#
+B             W#
+W#    WB                W#
+
+W#                      W#
+  W#  W#  W#  W#  W#  W#
         </script>
 
 
