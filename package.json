@@ -6,6 +6,7 @@
   "author": "Chris Glover <chris.glover@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "hammerjs": "^2.0.8",
     "pixi.js": "^4.5.0",
     "tween.js": "^16.6.0"
   },
