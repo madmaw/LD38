@@ -64,8 +64,8 @@
 
             //let expectedRoomWidth = 8 * tileWidth;
             //let expectedRoomHeight = 8 * tileHeight;
-            let expectedRoomWidth = roomWidth;
-            let expectedRoomHeight = roomHeight;
+            let expectedRoomWidth = roomWidth + tileWidth;
+            let expectedRoomHeight = roomHeight + tileHeight;
 
             let width = document.body.clientWidth;
             let height = document.body.clientHeight;
