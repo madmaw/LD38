@@ -6,8 +6,18 @@
         <script src="node_modules/pixi.js/dist/pixi.js"></script>
         <script src="node_modules/tween.js/src/Tween.js"></script>
         <script src="node_modules/hammerjs/hammer.js"></script>
+        <script>
+          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+          })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+          ga('create', 'UA-97898020-1', 'auto');
+          ga('send', 'pageview');
+
+        </script>
         <script id="level-1" name="Corridor" help="Walk to the exit tile" type="text/template">
-  W#  
+  W#
 W#wPW#
 
 W#  W#
@@ -17,16 +27,16 @@ W#  W#
 W#  W#
 W
 W#  W#
-  W#  
+  W#
         </script>
         <script id="level-2" name="Party" help="Exit tiles are triggered by their respective colors" type="text/template">
   W#  W#  W#
 W#rPW#  W#  W#
 
 W#  W#gPW#  W#
-      
+
 W#  W#  W#bPW#
-      
+
 W#  W#  W#  W#
 R   G   B
 W#  W#  W#  W#
@@ -34,8 +44,8 @@ W#  W#  W#  W#
         </script>
 
         <script id="level-3" name="Split" help="Walking through a colored wall will filter out that color" type="text/template">
-  W#  W# 
-W#wP    W#  
+  W#  W#
+W#wP    W#
   C#      W#
 W#  W#      W#
       M#
@@ -48,13 +58,13 @@ W#  W#  W#  W#
         <script id="level-4" name="Merge" help="You can combine your colors back again" type="text/template">
   W#  W#  W#
 W#  C#wPY#  W#
-      M#   
+      M#
 W#          W#
   W#      W#
     W#  W#
-        
+
     W#  W#
-    W   
+    W
     W#  W#
       W#
         </script>
@@ -64,9 +74,9 @@ W#          W#
 W#    rP    W#
 
 W#YBW#  W#MBW#
-      
+
 W#  W#  W#  W#
-      
+
 W#  W#  W#  W#
 G   R   B
 W#  W#  W#  W#
@@ -77,13 +87,13 @@ R W#  W#  W#
 W#          W#
   G#  G#  G#
 W#          W#
-      
+
 W#    yP    W#
-      
+
 W#    MB    W#
 
 W#          W#
-  G#  G#B G#   
+  G#  G#B G#
 W#          W#
   W#  W#  W#
         </script>
@@ -95,7 +105,7 @@ W#        rP        W#
 W#    WB      WB    W#
 
 W#                  W#
-            
+
 W#        GB        W#
   R#  R#G R#  R#  R#
 W#                  W#
@@ -105,35 +115,35 @@ W#                  W#
         <script id="level-8" name="Tryanos" help="Sometimes there are monsters! Avoid!!" type="text/template">
   W#  W#  W#
 W#    wP    W#
-  R#      B#  
-W#  W#WDW#  W#    
+  R#      B#
+W#  W#WDW#  W#
 
-W#GDW#  W#  W#    
-    W  
-W#          W#    
-  W#  W#  W#  
+W#GDW#  W#  W#
+    W
+W#          W#
+  W#  W#  W#
         </script>
 
         <script id="level-9" name="Flicker" help="Flickering objects (like you) can split, solid objects cannot" type="text/template">
   W#  W#  W#
 W#    wP    W#
-G     R#R      
-W#  G#wBG#  W#    
+G     R#R
+W#  G#wBG#  W#
       R#
-W#          W#    
-B     R#B     
+W#          W#
+B     R#B
 W#  G#WBG#  W#
       R#
-W#          W#    
-  W#  W#  W#  
+W#          W#
+  W#  W#  W#
         </script>
 
         <script id="level-10" name="Push" type="text/template">
 W W#  W#  W#
 W#    wPG#  W#
-        
+
 W#  W#WBG#  W#
-  C#      
+  C#
 W#  W#  W#  W#
           C#
 W#          W#
@@ -147,15 +157,15 @@ W#          W#
     W#              W#
   W#                  W#
 W#                gP    W#
-                      
+
 W#        CD  GB        W#
-            
+
 W#        MD            W#
-R                 
+R
 W#                      W#
   W#G B#              W#
-    W#  W#          W#    
-      W#  W#  W#  W#  
+    W#  W#          W#
+      W#  W#  W#  W#
         </script>
 
         <script id="level-12" name="Filter" type="text/template">
@@ -177,13 +187,13 @@ W#          W#
 W#        gP            W#
                           W#
 W#            WB      WB    W#
-  
+
 W#    WB          rB        W#
-W W#      W#      W#      
+W W#      W#      W#
 W#    bB  bB                W#
   W#  W#      W#      W#  W#
     W#        rB    W#
-    
+
     W#    WB      WBW#
 
     W#              W#
@@ -193,9 +203,9 @@ W#    bB  bB                W#
         <script id="level-14" name="Co-op" type="text/template">
   W#  W#  W#  W#  W#  W#
 W#wPR#          G#      W#
-      W#  W#R  
+      W#  W#R
 W#          W#  W#      W#
-  W#  B#  W#        G    
+  W#  B#  W#        G
 W#          W#  W#      W#
 B             W#
 W#    WB                W#

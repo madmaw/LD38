@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 var Color = (function () {
     function Color(rgb, name) {
         this.rgb = rgb;
@@ -156,14 +161,12 @@ var Home;
             this.levelsElementId = 'home-levels';
         }
         StateHome.prototype.start = function (listener) {
-            // populate the levels
             var homeElement = document.getElementById(this.homeElementId);
             homeElement.removeAttribute('class');
             var levelsElement = document.getElementById(this.levelsElementId);
             while (levelsElement.firstChild != null) {
                 levelsElement.removeChild(levelsElement.firstChild);
             }
-            // render level descriptions
             for (var _i = 0, _a = this.levelSummaries; _i < _a.length; _i++) {
                 var levelSummary = _a[_i];
                 var unlocked = localStorage.getItem('level-' + levelSummary.id) || levelSummary.id == 0;
@@ -206,7 +209,6 @@ window.onload = function () {
         var state;
         if (event.type == StateEventType.LoadingComplete && (event.data instanceof StateEventDataLoadingComplete)) {
             var loadingResult = event.data;
-            // create some factories
             var stateFactories = {};
             var roomFactories = [];
             var levelId = 0;
@@ -231,8 +233,6 @@ window.onload = function () {
             var deathSound = void 0;
             if (window["AudioContext"] != null) {
                 audioContext = new AudioContext();
-                //    } else if (_w["webkitAudioContext"]) {
-                //        audioContext = new webkitAudioContext();
                 splitSound = new Sound.WebAudioBoomSoundFactory(audioContext, 0.2).create();
                 moveSound = new Sound.WebAudioToneSoundFactory(audioContext, 'sawtooth', 250, 1000, 400, 0.01, 0.08, 0.12, 0.3, 0.3).create();
                 activateSound = new Sound.WebAudioToneSoundFactory(audioContext, 'square', 250, 1000, 200, 0.01, 0.08, 0.1, 0.2, 0.2).create();
@@ -261,7 +261,6 @@ window.onload = function () {
             state = stateFactory(new StateKey(StateKeyType.Home));
         }
         else if (event.type == StateEventType.PlayLevel && (event.data instanceof StateEventDataLevelPlay)) {
-            // unlock that level
             localStorage.setItem("level-" + event.data.id, "" + true);
             state = stateFactory(new StateKey(StateKeyType.LevelPlay, new StateKeyDataLevelPlay(event.data.id)));
         }
@@ -313,7 +312,6 @@ var Level;
         Description.BaseEntity = BaseEntity;
     })(Description = Level.Description || (Level.Description = {}));
 })(Level || (Level = {}));
-/// <reference path="BaseEntity.ts" />
 var Level;
 (function (Level) {
     var Description;
@@ -329,7 +327,6 @@ var Level;
                 return _this;
             }
             BaseMonster.prototype.canBeMovedIntoBy = function (room, mover, moverColor, direction) {
-                // is the next tile over empty or contain a thing that can be pushed?
                 var myColor;
                 if (this.sticky) {
                     myColor = this.getColor();
@@ -349,16 +346,13 @@ var Level;
                 }
                 else {
                     if (this.sticky && wall.getColor().overlaps(myColor)) {
-                        // can't move
                         canMove = Color.BLACK;
                     }
                     else {
-                        // bits of us can move...
                         canMove = myColor.exclude(wall.getColor());
                     }
                 }
                 if (!canMove.isBlack()) {
-                    // can we move onto the next tile
                     var tile = room.getTile(this.tileX, this.tileY, direction);
                     if (tile != null) {
                         var monsters = tile.monsters;
@@ -368,7 +362,6 @@ var Level;
                                 var canKill = monster.canBeKilledBy(room, this, canMove);
                                 var canDie = this.canReallyBeKilledBy(canMove, room, monster, monster.getColor());
                                 var canPush = monster.canBeMovedIntoBy(room, this, canMove, direction);
-                                // are there colours we can't push?
                                 var cantPush = monster.getColor().exclude(canPush);
                                 canPush = canMove.exclude(cantPush);
                                 var canMerge = this.canMergeInto(canMove, room, monster);
@@ -391,13 +384,10 @@ var Level;
                 var canMove = this.canMove(room, this.getColor(), direction);
                 var result = [];
                 if (!canMove.isBlack()) {
-                    // move
                     var intersection = canMove.intersection(this.getColor());
                     var remainder = this.getColor().exclude(intersection);
                     if (!remainder.isBlack()) {
-                        // create a duplicate
                         result.push(this.duplicate(room, remainder));
-                        // reduce our number of colours
                         result.push(this.recolor(room, intersection));
                     }
                     var successfulMove = this.moveToTile(room, direction);
@@ -410,7 +400,6 @@ var Level;
             };
             BaseMonster.prototype.canSplitOnto = function (myColor, room, onto) {
                 if (this.sticky) {
-                    // we can't split!
                     return Color.BLACK;
                 }
                 else {
@@ -453,11 +442,9 @@ var Level;
                     if (!excludedColors.isBlack()) {
                         var survivingColors = excludedColors.exclude(mover.getColor());
                         if (moveColor.isBlack() || this.sticky) {
-                            // or die entirely
                             deltas.push(this.die(room, this.monsterType != mover.monsterType));
                         }
                         else {
-                            // kill off our colours
                             var colorDelta = this.recolor(room, moveColor);
                             deltas.push(colorDelta);
                         }
@@ -518,17 +505,14 @@ var Level;
                     var moveToTileDelta = new Description.Delta(this, Description.DeltaType.MoveToTile, new Description.DeltaDataMoveToTile(this.tileX, this.tileY, direction, Description.DeltaDataMoveType.Walk));
                     moveToWallDelta.addChild(moveToTileDelta);
                     var remainingColor = this.color;
-                    // check for our death
                     for (var i = monsters.length; i > 0;) {
                         i--;
                         var monster = monsters[i];
                         var killedColor = this.canReallyBeKilledBy(remainingColor, room, monster, monster.getColor());
                         if (!killedColor.isBlack()) {
-                            // kill that color
                             remainingColor = remainingColor.exclude(killedColor);
                         }
                     }
-                    // otherwhise notify of moves
                     if (!remainingColor.isBlack()) {
                         moveToTileDelta.addChild(this.recolor(room, remainingColor));
                         for (var i = monsters.length; i > 0;) {
@@ -539,12 +523,10 @@ var Level;
                                 moveToTileDelta.addChildren(monsterDeltas);
                             }
                         }
-                        // merge colors
                         moveToTileDelta.addChildren(this.mergeColors(room));
                         moveToTileDelta.addChild(room.addMonster(this));
                     }
                     else {
-                        // we died!
                         moveToTileDelta.addChild(this.die(room, true));
                     }
                 }
@@ -557,7 +539,6 @@ var Level;
                     i--;
                     var monster = monsters[i];
                     if (this.monsterType == monster.monsterType) {
-                        // merge
                         var color = this.getColor().union(monster.getColor());
                         this.sticky = this.sticky && monster.sticky;
                         deltas.push(this.kill(room, monster, false));
@@ -743,7 +724,6 @@ var Level;
                 var _this = this;
                 return function () {
                     var room = new Description.Room(_this.width, _this.height, null);
-                    // fill out walls
                     for (var x = 0; x < _this.width; x++) {
                         var topWall = void 0;
                         if (x == 3) {
@@ -807,7 +787,6 @@ var Level;
         })(MonsterType = Description.MonsterType || (Description.MonsterType = {}));
     })(Description = Level.Description || (Level.Description = {}));
 })(Level || (Level = {}));
-///<reference path="BaseMonster.ts"/>
 var Level;
 (function (Level) {
     var Description;
@@ -842,7 +821,6 @@ var Level;
         Description.MonsterDragon = MonsterDragon;
     })(Description = Level.Description || (Level.Description = {}));
 })(Level || (Level = {}));
-/// <reference path="BaseMonster.ts" />
 var Level;
 (function (Level) {
     var Description;
@@ -1035,7 +1013,6 @@ var Level;
             Room.prototype.move = function (direction) {
                 var deltas = [];
                 if (direction.dx != 0 || direction.dy != 0) {
-                    // work back in the opposite direction
                     var dx = void 0;
                     var dy = void 0;
                     var x = void 0;
@@ -1108,7 +1085,6 @@ var Level;
                 var _this = this;
                 return function () {
                     var room = new Description.Room(_this.width, _this.height, _this.helpText);
-                    // horizontal walls and tile color
                     var row = 0;
                     while (row < _this.lines.length) {
                         var line = _this.lines[row];
@@ -1138,7 +1114,6 @@ var Level;
                         }
                         row += 2;
                     }
-                    // vertical walls and monsters
                     row = 1;
                     while (row < _this.lines.length) {
                         var y = Math.floor(row / 2);
@@ -1291,7 +1266,6 @@ var Level;
         Description.WallCrossing = WallCrossing;
     })(Description = Level.Description || (Level.Description = {}));
 })(Level || (Level = {}));
-///<reference path="BaseEntity.ts"/>
 var Level;
 (function (Level) {
     var Description;
@@ -1313,7 +1287,6 @@ var Level;
         Description.WallSolid = WallSolid;
     })(Description = Level.Description || (Level.Description = {}));
 })(Level || (Level = {}));
-///<reference path="WallSolid.ts"/>
 var Level;
 (function (Level) {
     var Description;
@@ -1327,7 +1300,6 @@ var Level;
                 var color = this.color.union(crosser.getColor());
                 var delta = this.recolor(room, color);
                 if (this.color.isWhite()) {
-                    // level complete
                     delta.addChild(new Description.Delta(this, Description.DeltaType.LevelComplete));
                 }
                 return new Description.WallCrossing(true, [delta]);
@@ -1390,21 +1362,6 @@ var Level;
                     }
                 }
                 return children.length;
-                /*
-                let min = 0;
-                let max = children.length - 1;
-                while (min < max) {
-                    let mid = Math.floor((min + max) / 2);
-                    let midValue = children[mid];
-                    let midZ = this.getZ(midValue);
-                    if (midZ < childZ) {
-                        min = mid+1;
-                    } else {
-                        max = mid;
-                    }
-                }
-                return min;
-                */
             };
             BaseEntityRender.prototype.recalculateZ = function (child) {
                 var z = this.calculateZ(child);
@@ -1488,7 +1445,6 @@ var Level;
             function EmptyAnimation() {
             }
             EmptyAnimation.prototype.finish = function () {
-                // done!
             };
             EmptyAnimation.prototype.start = function () {
             };
@@ -1502,7 +1458,6 @@ var Level;
         Render.EmptyAnimation = EmptyAnimation;
     })(Render = Level.Render || (Level.Render = {}));
 })(Level || (Level = {}));
-/// <reference path="BaseEntityRender.ts" />
 var Level;
 (function (Level) {
     var Render;
@@ -1558,7 +1513,6 @@ var Level;
                         var toX = data.fromTileX * this.tileWidth + this.tileWidth / 2 + data.direction.dx * this.tileWidth / 2;
                         var toY = data.fromTileY * this.tileHeight + this.tileHeight / 2 + data.direction.dy * this.tileHeight / 2 - this.tileHeight / 4;
                         animations.push(new Render.TweenAnimation(this.sprite, { x: toX, y: toY }, 100, function () { _this.reorderChild(_this.sprite); }, TWEEN.Easing.Quadratic.In));
-                        // play a bit of audio
                         this.moveSound();
                     }
                     else {
@@ -1720,11 +1674,9 @@ var Level;
                 if (this.timeoutHandle != null) {
                     clearTimeout(this.timeoutHandle);
                 }
-                // work around bug where tweens stop without feedback
                 this.timeoutHandle = setTimeout(f, this.duration + 500);
             };
             RepeatingTweenAnimation.prototype.start = function () {
-                //weird bug where repeating animations don't start initially
                 if (this.tween == null) {
                     this.startNextAnimation();
                 }
@@ -1739,7 +1691,6 @@ var Level;
                 }
             };
             RepeatingTweenAnimation.prototype.onComplete = function (callback) {
-                // never compeltes
             };
             return RepeatingTweenAnimation;
         }());
@@ -1856,7 +1807,6 @@ var Level;
             TweenAnimation.prototype.start = function () {
                 var _this = this;
                 this.tween.start();
-                // sometimes the tweens don't work!
                 this.timeoutHandle = setTimeout(function () {
                     _this.callCallback();
                 }, this.duration + 500);
@@ -1872,7 +1822,6 @@ var Level;
         Render.TweenAnimation = TweenAnimation;
     })(Render = Level.Render || (Level.Render = {}));
 })(Level || (Level = {}));
-/// <reference path="BaseEntityRender.ts" />
 var Level;
 (function (Level) {
     var Render;
@@ -1993,8 +1942,6 @@ var Level;
             var tileHeight = 48;
             var roomWidth = this.room.width * tileWidth;
             var roomHeight = this.room.height * tileHeight;
-            //let expectedRoomWidth = 8 * tileWidth;
-            //let expectedRoomHeight = 8 * tileHeight;
             var expectedRoomWidth = roomWidth + tileWidth;
             var expectedRoomHeight = roomHeight + tileHeight;
             var width = document.body.clientWidth;
@@ -2039,27 +1986,19 @@ var Level;
             });
             document.onkeydown = function (event) {
                 switch (event.keyCode) {
-                    // w
                     case 87:
-                    //up
                     case 38:
                         _this.move(Direction.NORTH);
                         break;
-                    // s
                     case 83:
-                    // down
                     case 40:
                         _this.move(Direction.SOUTH);
                         break;
-                    // a
                     case 65:
-                    // left
                     case 37:
                         _this.move(Direction.WEST);
                         break;
-                    // d
                     case 68:
-                    // right
                     case 39:
                         _this.move(Direction.EAST);
                         break;
@@ -2086,7 +2025,6 @@ var Level;
                 this.listener(new StateEvent(StateEventType.PlayLevel, new StateEventDataLevelPlay(this.nextLevelId)));
             }
             else {
-                // cancel any animations
                 this.cancellingAnimations = true;
                 for (var i = this.animations.length; i > 0;) {
                     i--;
@@ -2147,7 +2085,6 @@ var Level;
             }
             TWEEN.removeAll();
             this.renders = {};
-            // recreate all the entities
             var entities = this.room.getAllEntites();
             for (var _i = 0, entities_1 = entities; _i < entities_1.length; _i++) {
                 var entity = entities_1[_i];
@@ -2200,7 +2137,6 @@ var Loading;
                         progress++;
                         var source = this;
                         var coloredImages = [];
-                        // rotate though all the colours
                         for (var _i = 0, colors_1 = colors; _i < colors_1.length; _i++) {
                             var color = colors_1[_i];
                             var coloredImage = document.createElement('canvas');
@@ -2210,7 +2146,7 @@ var Loading;
                             context.drawImage(source, 0, 0);
                             var imageData = context.getImageData(0, 0, coloredImage.width, coloredImage.height);
                             var pixelArray = imageData.data;
-                            var length = pixelArray.length / 4; // 4 components - red, green, blue and alpha
+                            var length = pixelArray.length / 4;
                             for (var i = 0; i < length; i++) {
                                 var index = 4 * i;
                                 var r = pixelArray[index];
@@ -2299,7 +2235,6 @@ var Sound;
             return function () {
                 var intensity = Math.random();
                 if (_this.audioContext) {
-                    // set up the frequency
                     var now = _this.audioContext.currentTime;
                     var durationSeconds = _this.sampleDurationSeconds;
                     var staticNode = _this.audioContext.createBufferSource();
@@ -2309,14 +2244,12 @@ var Sound;
                     filter.type = 'lowpass';
                     filter.Q.value = 1;
                     filter.frequency.value = 1200;
-                    //decay
                     var gain = _this.audioContext.createGain();
                     var decay = durationSeconds * 0.5;
                     Sound.linearRampGain(gain, now, intensity / 2, intensity, durationSeconds, decay, null, durationSeconds);
                     staticNode.connect(filter);
                     filter.connect(gain);
                     gain.connect(_this.audioContext.destination);
-                    // die
                     setTimeout(function () {
                         filter.disconnect();
                         staticNode.disconnect();
@@ -2352,19 +2285,15 @@ var Sound;
                 var intensity = Math.random();
                 if (_this.audioContext) {
                     var now = _this.audioContext.currentTime;
-                    // base noise
                     var oscillator = _this.audioContext.createOscillator();
                     oscillator.frequency.setValueAtTime(Math.max(1, _this.startFrequency + _this.frequencyRange * intensity), now);
                     oscillator.frequency.linearRampToValueAtTime(Math.max(1, _this.endFrequency + _this.frequencyRange * intensity), now + _this.durationSeconds);
                     oscillator.type = _this.oscillatorType;
-                    //decay
                     var gain = _this.audioContext.createGain();
                     Sound.linearRampGain(gain, now, 0.2 * _this.volumeScale, 0.1 * _this.volumeScale, _this.attackSeconds, _this.decaySeconds, _this.sustainSeconds, _this.durationSeconds);
-                    // wire up
                     oscillator.connect(gain);
                     gain.connect(_this.audioContext.destination);
                     oscillator.start();
-                    // kill
                     setTimeout(function () {
                         oscillator.stop();
                     }, _this.durationSeconds * 1000);
@@ -2404,7 +2333,6 @@ var Sound;
                     var vibratoGain = _this.audioContext.createGain();
                     vibratoGain.gain.value = -1000;
                     oscillator.connect(gain);
-                    //gain.connect(vibratoGain);
                     vibrato.connect(vibratoGain);
                     vibratoGain.connect(oscillator.detune);
                     gain.connect(_this.audioContext.destination);
