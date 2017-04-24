@@ -26,6 +26,16 @@ body {
     text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
 }
 
+.home-formula {
+  text-align: center;
+  font-weight: bold;
+  color: white;
+}
+
+.home-formula > span {
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+}
+
 .home-level {
     display: inline-block;
     padding: 10px;
